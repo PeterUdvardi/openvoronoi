@@ -261,6 +261,22 @@ public:
         return vertex_list;
     }
 
+    boost::python::list get_face_site_vertices(HEFace f)  {
+        boost::python::list vertex_list;
+        if (g[f].site->isLine()) {
+            HEVertex v1 = g.source( g[f].site->edge() );
+            HEVertex v2 = g.target( g[f].site->edge() );
+            vertex_list.append( g[v1].index );
+            vertex_list.append( g[v2].index );
+        }
+        if (g[f].site->isPoint()) {
+            HEVertex v1 = g[f].site->vertex();
+            vertex_list.append( g[v1].index );
+        }
+        
+        return vertex_list;
+    }
+
     /// get edges for drawing. with null-face offsets.
     // NOTE: no g[edge].valid check here!?
     boost::python::list getVoronoiEdgesOffset()  {
